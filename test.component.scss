@@ -1,0 +1,17 @@
+.test-container {
+    height: 100vh;
+    background-color: white;
+
+    .group-header {
+        height: 50px;
+        color: green;
+        font-weight: bold;
+        font-size: 20px;
+        clear: both;
+
+        span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}

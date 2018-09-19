@@ -1,0 +1,11 @@
+<ab-virtual-scroll [bufferSize]="600" [groupHeaderHeight]="50" [childHeight]="300" [cache]="virtualScrollCache" [items]="groups"
+    class="test-container" (update)="viewPortGroups = $event">
+    <div *ngFor="let group of viewPortGroups; trackBy: groupTrackByFn">
+        <div class="group-header">
+            <span>Group header</span>
+        </div>
+        <virtual-scroll-item-measurer [key]="item.id" [cache]="virtualScrollCache" *ngFor="let item of group.items; trackBy: itemTrackByFn">
+            <app-test-item [index]="item.id" [width]="item.width" [color]="item.color"></app-test-item>
+        </virtual-scroll-item-measurer>
+    </div>
+</ab-virtual-scroll>
