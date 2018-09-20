@@ -1,17 +1,31 @@
-.test-container {
-    height: 100vh;
-    background-color: white;
+.demo-info {
+  height: 400px;
 
-    .group-header {
-        height: 50px;
-        color: green;
-        font-weight: bold;
-        font-size: 20px;
-        clear: both;
+  .title {
+    color: rgb(78, 125, 115);
+    font-size: 2em;
+  }
+}
 
-        span {
-            display: inline-block;
-            vertical-align: middle;
-        }
-    }
+.content {
+  border-top: 1px solid rgb(78, 125, 115);
+  border-bottom: 1px solid rgb(78, 125, 115);
+
+  .test-container {
+      background-color: white;
+      height: calc(100vh - 430px);
+
+      .group-header {
+          height: 50px;
+          color: green;
+          font-weight: bold;
+          font-size: 20px;
+          clear: both;
+
+          span {
+              display: inline-block;
+              vertical-align: middle;
+          }
+      }
+  }
 }

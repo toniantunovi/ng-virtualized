@@ -14,7 +14,6 @@ class TestGroup implements VirtualScrollGroup {
 }
 
 @Component({
-  moduleId: module.id,
   selector: 'app-demo',
   templateUrl: 'demo.component.html',
   styleUrls: ['./demo.component.scss']

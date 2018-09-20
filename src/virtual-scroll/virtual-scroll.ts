@@ -68,7 +68,7 @@ export class VirtualScrollComponent implements OnInit, OnDestroy {
   private _lastItemStartIndex: number = 0;
   private _lastGroupEndIndex: number = 0;
   private _lastItemEndIndex: number = 0;
-  private _currentChildHeight: number = this.childHeight;
+  private _currentChildHeight: number = 50;
   private _loadMoreThrottle = new Subject();
 
   private _componentDestroyed$ = new Subject<void>();
@@ -76,6 +76,7 @@ export class VirtualScrollComponent implements OnInit, OnDestroy {
   constructor(private readonly _zone: NgZone) { }
 
   ngOnInit() {
+    this._currentChildHeight = this.childHeight;
     this._addViewportEventHandlers();
     this.refresh(true, true);
     this._loadMoreThrottle.pipe(takeUntil(this._componentDestroyed$), throttleTime(this.loadMoreThrottleTime)).subscribe(() => this.loadMore.emit());

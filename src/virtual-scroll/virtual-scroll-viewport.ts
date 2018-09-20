@@ -1,5 +1,5 @@
-import { Component, ContentChild, ElementRef, ViewChild, OnInit, Renderer2, OnDestroy, EventEmitter, Input } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component, ContentChild, ElementRef, ViewChild, OnInit, Renderer2, OnDestroy, EventEmitter, Input, AfterViewInit } from '@angular/core';
+import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { VirtualScrollGroup } from './virtual-scroll';
@@ -30,7 +30,7 @@ export enum ScrollDirection {
             overflow-y: auto;
             position: relative;
             display: block;
-            height: 100%;
+            height: inherit;
             background-color: inherit;
             -webkit-overflow-scrolling: touch;
         }
@@ -47,7 +47,7 @@ export enum ScrollDirection {
         }
     `]
 })
-export class VirtualScrollViewport implements OnInit, OnDestroy {
+export class VirtualScrollViewport implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content', { read: ElementRef })
   contentElementRef: ElementRef;
 
@@ -61,12 +61,17 @@ export class VirtualScrollViewport implements OnInit, OnDestroy {
   itemIdKey: string = 'id';
 
   private _dimensions: ViewportDimensions;
+
   private _lastTopPadding: number = 0;
+
   private _lastScrollHeight: number = 0;
+
   private _lastScrollTop: number = 0;
 
   private _componentDestroyed$ = new Subject<void>();
+
   private _scrollEvent = new EventEmitter<any>();
+
   private _scrollDirection = ScrollDirection.Down;
 
   constructor(private readonly _element: ElementRef, private readonly _renderer: Renderer2) { }
@@ -85,7 +90,10 @@ export class VirtualScrollViewport implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.refresh();
-    Observable.fromEvent(this._element.nativeElement, 'scroll').pipe(takeUntil(this._componentDestroyed$)).subscribe(this._handleScroll.bind(this));
+  }
+
+  ngAfterViewInit() {
+    fromEvent(this._element.nativeElement, 'scroll').pipe(takeUntil(this._componentDestroyed$)).subscribe(this._handleScroll.bind(this));
   }
 
   ngOnDestroy() {
@@ -98,7 +106,7 @@ export class VirtualScrollViewport implements OnInit, OnDestroy {
   }
 
   onResize() {
-    return Observable.fromEvent(window, 'resize');
+    return fromEvent(window, 'resize');
   }
 
   refresh(scrollToTop?: boolean) {
